@@ -4,6 +4,15 @@ const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
+const Statistics = ({ average, positiveFeedback }) => {
+  return (
+    <div>
+      <p>average {average}</p>
+      <p>positive {positiveFeedback}</p>
+    </div>
+  );
+};
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -66,8 +75,7 @@ const App = () => {
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positiveFeedback}</p>
+      <Statistics average={average} positiveFeedback={positiveFeedback} />
     </div>
   );
 };
