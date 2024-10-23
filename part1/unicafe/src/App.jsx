@@ -4,13 +4,21 @@ const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
-const Statistics = ({ average, positiveFeedback }) => {
-  return (
-    <div>
-      <p>average {average}</p>
-      <p>positive {positiveFeedback}</p>
-    </div>
-  );
+const Statistics = ({ good, neutral, bad, all, average, positiveFeedback }) => {
+  if (all == 0) {
+    return <p>No feedback given</p>;
+  } else {
+    return (
+      <div>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {all}</p>
+        <p>average {average}</p>
+        <p>positive {positiveFeedback}</p>
+      </div>
+    );
+  }
 };
 
 const App = () => {
@@ -23,8 +31,6 @@ const App = () => {
   const [average, setAverage] = useState(0);
   const [positiveFeedback, setPositiveFeedback] = useState(0);
 
-  console.log("avarage " + average);
-  console.log("score " + score);
   return (
     <div>
       <h2>give feedback</h2>
@@ -71,11 +77,15 @@ const App = () => {
         }}
       />
       <h2>statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <Statistics average={average} positiveFeedback={positiveFeedback} />
+
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        all={all}
+        average={average}
+        positiveFeedback={positiveFeedback}
+      />
     </div>
   );
 };
