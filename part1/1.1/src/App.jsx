@@ -11,9 +11,6 @@ const Part = ({ part, exercise }) => {
 };
 
 const Content = (props) => {
-  console.log(props);
-  console.log(props.part1);
-  console.log(props.exercises1);
   return (
     <div>
       {<Part part={props.part1} exercise={props.exercises1} />}
