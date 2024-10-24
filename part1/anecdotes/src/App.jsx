@@ -17,6 +17,8 @@ const App = () => {
   const n = anecdotes.length;
   const [points, setPoints] = useState(Array(n).fill(0));
 
+  const [maxRank, setMaxRank] = useState(0);
+
   function generateRandomNumber() {
     const randomNum = Math.floor(Math.random() * 8);
     return randomNum;
@@ -26,13 +28,33 @@ const App = () => {
     const pointsCopy = [...points];
     pointsCopy[selected] += 1;
     setPoints(pointsCopy);
+
+    handleRanking(pointsCopy);
+  }
+
+  function handleRanking(points) {
+    let maxIndex = 0;
+
+    for (let i = 0; i < points.length; i++) {
+      if (points[i] > points[maxIndex]) {
+        maxIndex = i;
+      }
+    }
+    setMaxRank(maxIndex);
   }
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <p>{anecdotes[selected]}</p>
       <p>has {points[selected]} votes</p>
-      <button onClick={() => handleVote(points, selected)}>vote</button>
+      <button
+        onClick={() => {
+          handleVote(points, selected);
+        }}
+      >
+        vote
+      </button>
       <button
         onClick={() => {
           setSelected(generateRandomNumber());
@@ -40,6 +62,9 @@ const App = () => {
       >
         next anecdote
       </button>
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[maxRank]}</p>
+      <p>has {points[maxRank]} votes</p>
     </div>
   );
 };
