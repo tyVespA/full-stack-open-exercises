@@ -7,7 +7,8 @@ const Button = ({ text, onClick }) => {
 const StatisticLine = ({ text, value }) => {
   return (
     <tr>
-      <td>{text}</td> <td>{value}</td>
+      <td>{text}</td>
+      <td>{value}</td>
     </tr>
   );
 };
@@ -18,12 +19,14 @@ const Statistics = (props) => {
   } else {
     return (
       <table>
-        <StatisticLine text="good" value={props.good} />
-        <StatisticLine text="neutral" value={props.neutral} />
-        <StatisticLine text="bad" value={props.bad} />
-        <StatisticLine text="all" value={props.all} />
-        <StatisticLine text="average" value={props.average} />
-        <StatisticLine text="positive" value={props.positiveFeedback} />
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={props.all} />
+          <StatisticLine text="average" value={props.average} />
+          <StatisticLine text="positive" value={props.positiveFeedback} />
+        </tbody>
       </table>
     );
   }
@@ -66,7 +69,6 @@ const App = () => {
           setNeutral(neutral + 1);
           setAll(all + 1);
           setAverage(newScore / newAll);
-          //   setAverage(score / all);
           setPositiveFeedback((newGood / newAll) * 100 + " %");
         }}
       />
@@ -84,8 +86,8 @@ const App = () => {
           setPositiveFeedback((newGood / newAll) * 100 + " %");
         }}
       />
-      <h2>statistics</h2>
 
+      <h2>statistics</h2>
       <Statistics
         good={good}
         neutral={neutral}
