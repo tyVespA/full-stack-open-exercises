@@ -9,8 +9,19 @@ const App = () => {
     const personObject = {
       name: newName,
     };
-    setPersons(persons.concat(personObject));
-    setNewName("");
+
+    let nameExists = false;
+    for (let i = 0; i < persons.length; i++) {
+      if (newName === persons[i].name) {
+        nameExists = true;
+        alert(`${newName} already exists`);
+        // break;
+      }
+    }
+    if (nameExists == false) {
+      setPersons(persons.concat(personObject));
+      setNewName("");
+    }
   }
 
   function handleNameChange(e) {
