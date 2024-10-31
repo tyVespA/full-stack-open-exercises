@@ -2,10 +2,10 @@ import React from "react";
 import Part from "./Part";
 
 export default function Content({ parts }) {
-  let totalExercises = 0;
-  for (let part of parts) {
-    totalExercises += part.exercises;
-  }
+  const totalExercises = parts.reduce(
+    (accumulator, part) => accumulator + part.exercises,
+    0
+  );
   return (
     <div>
       {parts.map((part) => (
