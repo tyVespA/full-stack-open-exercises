@@ -2,11 +2,15 @@ import React from "react";
 import Header from "./Header";
 import Content from "./Content";
 
-export default function Course({ course }) {
+export default function Course({ courses }) {
   return (
     <>
-      <Header header={course.name}></Header>
-      <Content parts={course.parts}></Content>
+      {courses.map((course) => (
+        <div key={course.id}>
+          <Header header={course.name} />
+          <Content parts={course.parts} />
+        </div>
+      ))}
     </>
   );
 }

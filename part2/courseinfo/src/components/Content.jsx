@@ -9,7 +9,7 @@ export default function Content({ parts }) {
   return (
     <div>
       {parts.map((part) => (
-        <Part key={part.id} part={part}></Part>
+        <Part key={part.id} part={part} />
       ))}
       <p>total of {totalExercises} exercises</p>
     </div>
