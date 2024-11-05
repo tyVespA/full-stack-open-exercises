@@ -1,5 +1,8 @@
 import { useState } from "react";
-import ShowPeople from "./components/ShowPeople";
+import Heading from "./components/Heading";
+import FilterInput from "./components/FilterInput";
+import AddPersonForm from "./components/AddPersonForm";
+import RenderList from "./components/RenderList";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -12,91 +15,63 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
-  const [filteredNames, setFilteredNames] = useState([]);
 
-  function filterNames() {
-    setFilteredNames(
-      persons.filter((person) => {
-        return person.name.toLowerCase().includes(filter.toLowerCase());
-      })
-    );
-  }
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-  function addName(e) {
-    e.preventDefault();
-    const personObject = {
-      name: newName,
-      number: newNumber,
-    };
-
-    let nameExists = false;
-    for (let i = 0; i < persons.length; i++) {
-      if (newName === persons[i].name) {
-        nameExists = true;
-        alert(`${newName} already exists`);
-        // break;
+  function checkDuplicate(newName, persons) {
+    for (let person of persons) {
+      if (newName == person.name) {
+        alert(`${newName} is already added to phonebook`);
+        return false;
       }
     }
-    if (!nameExists) {
-      setPersons(persons.concat(personObject));
+    return true;
+  }
+
+  function addNewPerson(e) {
+    e.preventDefault();
+    const newPerson = { name: newName, number: newNumber };
+
+    if (checkDuplicate(newName, persons)) {
+      let updatedPersons = [...persons, newPerson];
+      setPersons(updatedPersons);
+      setNewName("");
+      setNewNumber("");
+    } else {
       setNewName("");
       setNewNumber("");
     }
-
-    filterNames();
-  }
-  function handleNameChange(e) {
-    setNewName(e.target.value);
-    filterNames();
-  }
-
-  function handleNumberChange(e) {
-    setNewNumber(e.target.value);
-    filterNames();
   }
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with{" "}
-          <input
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              filterNames();
-              console.log("filtered names:" + JSON.stringify(filteredNames));
-            }}
-          />
-        </div>
-      </form>
-      <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-
-      <ShowPeople
-        persons={persons}
-        filter={filter}
-        filteredNames={filteredNames}
+      <h1>Phonebook</h1>
+      <div>
+        filter with{" "}
+        <FilterInput
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </div>
+      <Heading title="Add new" />
+      <AddPersonForm
+        onSubmit={addNewPerson}
+        nameValue={newName}
+        onNameChange={(e) => setNewName(e.target.value)}
+        numberValue={newNumber}
+        onNumberChange={(e) => setNewNumber(e.target.value)}
       />
-      {/* 
-      {filteredNames.map((person) => (
-        <p key={person.id}>
-          {person.name} {person.number}
-        </p>
-      ))} */}
+      <Heading title="Numbers" />
+
+      {filter === "" ? (
+        <RenderList list={persons} />
+      ) : (
+        <RenderList list={filteredPersons} />
+      )}
     </div>
   );
 };
+
 export default App;
