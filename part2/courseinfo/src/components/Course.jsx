@@ -6,13 +6,14 @@ export default function Course({ course }) {
     (accumulator, currentValue) => accumulator + currentValue.exercises,
     0
   );
+
   return (
     <div>
-      <Header course={course} />
-      <Content course={course.parts[0]} />
-      <Content course={course.parts[1]} />
-      <Content course={course.parts[2]} />
-      {total}
+      <Header name={course.name} />
+      {course.parts.map((part) => (
+        <Content key={part.id} part={part} />
+      ))}
+      <strong>Total of {total} exercises</strong>
     </div>
   );
 }
