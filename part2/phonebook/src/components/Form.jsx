@@ -1,15 +1,26 @@
+import axios from "axios";
 import { useState } from "react";
+import personService from "../../services/personService";
+
 export default function Form({ persons, setPersons }) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
   const addPerson = (e) => {
     e.preventDefault();
+    const personObject = {
+      name: newName,
+      number: newNumber,
+      id: persons.length + 1,
+    };
     if (persons.some((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
       return;
     } else {
-      setPersons(persons.concat({ name: newName, number: newNumber }));
+      personService.create(personObject).then((response) => {
+        setPersons(persons.concat(response.data));
+      });
+
       setNewName("");
       setNewNumber("");
     }
