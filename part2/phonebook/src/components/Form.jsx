@@ -11,7 +11,6 @@ export default function Form({ persons, setPersons }) {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
     if (persons.some((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
