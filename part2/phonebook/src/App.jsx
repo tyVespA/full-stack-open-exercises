@@ -30,7 +30,7 @@ const App = () => {
       <Form persons={persons} setPersons={setPersons} />
 
       <h2>Numbers</h2>
-      <AllPersons persons={filteredPersons} />
+      <AllPersons persons={filteredPersons} setPersons={setPersons} />
     </div>
   );
 };
