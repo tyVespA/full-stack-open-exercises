@@ -4,6 +4,8 @@ import Form from "./components/Form";
 import AllPersons from "./components/AllPersons";
 import personService from "../services/personService";
 
+import "./style.css";
+
 const App = () => {
   const [persons, setPersons] = useState([]);
 
