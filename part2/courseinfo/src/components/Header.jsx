@@ -1,5 +1,3 @@
-import React from "react";
-
-export default function Header({ header }) {
-  return <h2>{header}</h2>;
+export default function Header({ course }) {
+  return <h1>{course.name}</h1>;
 }
