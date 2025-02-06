@@ -39,7 +39,11 @@ const getTrainingDays = (dailyExerciseHours: number[]) => {
 
 const calculateSuccess = (trainingDays: number, target: number) => {
   let success: boolean;
-  trainingDays >= target ? (success = true) : (success = false);
+  if (trainingDays >= target) {
+    success = true;
+  } else {
+    success = false;
+  }
   return success;
 };
 
