@@ -37,9 +37,9 @@ const getTrainingDays = (dailyExerciseHours: number[]) => {
   return trainingDays;
 };
 
-const calculateSuccess = (trainingDays: number, target: number) => {
+const calculateSuccess = (averageHrsTrained: number, target: number) => {
   let success: boolean;
-  if (trainingDays >= target) {
+  if (averageHrsTrained >= target) {
     success = true;
   } else {
     success = false;
@@ -47,10 +47,10 @@ const calculateSuccess = (trainingDays: number, target: number) => {
   return success;
 };
 
-const calculateRating = (trainingDays: number, target: number): number => {
-  if (trainingDays < target) return 1;
-  if (trainingDays === target) return 2;
-  if (trainingDays > target) return 3;
+const calculateRating = (averageHrsTrained: number, target: number): number => {
+  if (averageHrsTrained < target) return 1;
+  if (averageHrsTrained === target) return 2;
+  if (averageHrsTrained > target) return 3;
   return 0;
 };
 
@@ -66,16 +66,17 @@ export const calculateExercises = (
   dailyExerciseHours: number[]
 ): Result => {
   const trainingDays = getTrainingDays(dailyExerciseHours);
-  const rating = calculateRating(trainingDays, target);
+  const averageHrsTrained = getAverage(dailyExerciseHours);
+  const rating = calculateRating(averageHrsTrained, target);
 
   return {
     periodLength: dailyExerciseHours.length,
     trainingDays: trainingDays,
-    success: calculateSuccess(trainingDays, target),
+    success: calculateSuccess(averageHrsTrained, target),
     rating: rating,
     ratingDescription: getRatingDescription(rating),
     target: target,
-    average: getAverage(dailyExerciseHours),
+    average: averageHrsTrained,
   };
 };
 
