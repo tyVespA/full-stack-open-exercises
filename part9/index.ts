@@ -16,7 +16,7 @@ app.get("/bmi", (req, res) => {
     bmi: calculateBmi(height, weight),
   };
 
-  if (isNotNumber(weight) || isNotNumber(height)) {
+  if (!weight || !height || isNotNumber(weight) || isNotNumber(height)) {
     res.send({ error: "malformatted parameters" });
   }
   res.send(resObj);
