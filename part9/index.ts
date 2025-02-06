@@ -17,9 +17,9 @@ app.get("/bmi", (req, res) => {
   };
 
   if (!weight || !height || isNotNumber(weight) || isNotNumber(height)) {
-    res.send({ error: "malformatted parameters" });
+    res.json({ error: "malformatted parameters" });
   }
-  res.send(resObj);
+  res.json(resObj);
 });
 
 const PORT = 3000;
