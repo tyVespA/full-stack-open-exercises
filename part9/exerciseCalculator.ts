@@ -61,7 +61,7 @@ const getRatingDescription = (rating: number): string => {
   return "error";
 };
 
-const calculateExercises = (
+export const calculateExercises = (
   target: number,
   dailyExerciseHours: number[]
 ): Result => {
@@ -79,13 +79,15 @@ const calculateExercises = (
   };
 };
 
-try {
-  const { target, dailyExerciseHours } = parseArguments(process.argv);
-  console.log(calculateExercises(target, dailyExerciseHours));
-} catch (error: unknown) {
-  let errorMessage = "Something bad happened.";
-  if (error instanceof Error) {
-    errorMessage += " Error: " + error.message;
+if (require.main === module) {
+  try {
+    const { target, dailyExerciseHours } = parseArguments(process.argv);
+    console.log(calculateExercises(target, dailyExerciseHours));
+  } catch (error: unknown) {
+    let errorMessage = "Something bad happened.";
+    if (error instanceof Error) {
+      errorMessage += " Error: " + error.message;
+    }
+    console.log(errorMessage);
   }
-  console.log(errorMessage);
 }
