@@ -43,16 +43,18 @@ const calculateSuccess = (trainingDays: number, target: number) => {
   return success;
 };
 
-const calculateRating = (trainingDays: number, target: number) => {
+const calculateRating = (trainingDays: number, target: number): number => {
   if (trainingDays < target) return 1;
   if (trainingDays === target) return 2;
   if (trainingDays > target) return 3;
+  return 0;
 };
 
-const getRatingDescription = (rating: number) => {
+const getRatingDescription = (rating: number): string => {
   if (rating === 1) return "pretty bad..";
   if (rating === 2) return "not too bad but could be better.";
   if (rating === 3) return "great job!!";
+  return "error";
 };
 
 const calculateExercises = (
