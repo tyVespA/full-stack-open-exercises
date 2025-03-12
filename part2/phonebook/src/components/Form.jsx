@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import personService from "../../services/personService";
-import Success from "./Success";
+import Popup from "./Popup";
 
 export default function Form({ persons, setPersons }) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [lastAddedPerson, setLastAddedPerson] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [popupType, setPopupType] = useState("");
 
   const addPerson = (e) => {
     e.preventDefault();
@@ -18,12 +20,20 @@ export default function Form({ persons, setPersons }) {
       alert(`${newName} is already added to phonebook`);
       return;
     } else {
-      personService.create(personObject).then((response) => {
-        setPersons(persons.concat(response.data));
-      });
+      personService
+        .create(personObject)
+        .then((response) => {
+          setPersons(persons.concat(response.data));
+        })
+        .catch((error) => {
+          console.log(error.response.data.error);
+          setErrorMsg(error.response.data.error);
+          setPopupType("fail");
+        });
 
       setNewName("");
       setNewNumber("");
+      setPopupType("success");
       setLastAddedPerson(personObject.name);
       setTimeout(() => {
         setLastAddedPerson("");
@@ -32,7 +42,9 @@ export default function Form({ persons, setPersons }) {
   };
   return (
     <div>
-      {lastAddedPerson && <Success name={lastAddedPerson} />}
+      {lastAddedPerson && (
+        <Popup name={lastAddedPerson} type={popupType} errorMsg={errorMsg} />
+      )}
       <form onSubmit={addPerson}>
         <div>
           name:{" "}
