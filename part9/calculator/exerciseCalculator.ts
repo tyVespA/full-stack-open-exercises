@@ -33,7 +33,10 @@ const parseArguments = (args: string[]) => {
   };
 };
 
-const calculateExercises = (dailyExerciseHours: number[], target: number) => {
+const calculateExercises = (
+  dailyExerciseHours: number[],
+  target: number
+): Result => {
   const average =
     dailyExerciseHours.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
